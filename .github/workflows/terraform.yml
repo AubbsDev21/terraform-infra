@@ -25,7 +25,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{env.REGION}}
+          aws-region: ${{vars.REGION}}
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
         with:
@@ -41,6 +41,6 @@ jobs:
       - name: Create S3 Bucket
         if: steps.check_s3_bucket.outputs.s3_bucket_exists == 'false'
         run: | 
-          aws s3 mb s3://my-terraform-state-bucket-75445365/ --region ${{env.REGION}}
+          aws s3 mb s3://my-terraform-state-bucket-75445365/ --region ${{vars.REGION}}
       - name: Terraform fmt
         run: terraform fmt -check
